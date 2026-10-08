@@ -82,9 +82,7 @@ Floor: pass rate >= 90% within 120s. Refs: fix-web-skills-best-practices.
 | qwen3.8-27b-cf | 9 | 56% | 33% | 116 | 123 | 7 | 0.055 |
 | haiku-5.5-low | 9 | 100% | 100% | 31 | 46 | 0 | 0.007 |
 | gpt-6-sol-low | 9 | 100% | 100% | 27 | 42 | 0 | 0.055 |
-| sonnet-5.5-low | 15 | 93% | 87% | 40 | 120 | 2 | 0.099 |
-
-> Baseline sonnet-5.5-low does not meet the floor: fix the skill or the eval before trusting the other rows.
+| sonnet-5.5-low | 27 | 93% | 93% | 33 | 120 | 2 | 0.091 |
 
 **Lowest model meeting the floor: haiku-5.5-low**
 
