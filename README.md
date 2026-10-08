@@ -6,7 +6,7 @@ the skills repo.
 
 ```
 scripts/run.sh <skill> [git-ref] [provider-regex]   # set up workspace, run 3x per case, store summary
-npm run report                                      # results/ -> REPORT.html, REPORT.md, REPORT-detail.html
+npm run report                                      # results/ -> REPORT.html, METHODOLOGY.html, REPORT.md, REPORT-detail.html
 ```
 
 - `models.yaml`: model matrix, ranked low to high. Credentials come from your local Pi setup.
@@ -22,6 +22,8 @@ npm run report                                      # results/ -> REPORT.html, R
 ## Reports
 
 - `REPORT.html`: the one-page gist, skills x models, coloured by whether the model meets the skill's floor.
+- `METHODOLOGY.html`: how the evals work, the stack, what exists and what we added, what the numbers do and
+  do not tell you. Published next to the report as `methodology.html`.
 - `REPORT.md`: the gist plus per-skill tables, per-case matrices and common failure reasons.
 - `REPORT-detail.html` (not committed, `npm run report` builds it): the per-case matrix rendered by
   promptfoo itself. `lib/replay-provider.mjs` replays stored results, so no model is called.
@@ -29,9 +31,8 @@ npm run report                                      # results/ -> REPORT.html, R
 
 ## Publishing the report
 
-`.github/workflows/pages.yml` publishes `REPORT.html` as the site's index page whenever it changes on
-`main` (or on manual dispatch). It needs Pages enabled once by a repo admin: Settings > Pages >
-Source "GitHub Actions", visibility private (organization members only).
+`.github/workflows/pages.yml` publishes `REPORT.html` (index) and `METHODOLOGY.html` whenever either
+changes on `main`, or on manual dispatch. Pages is enabled with source "GitHub Actions".
 
 ## How a run is graded
 
