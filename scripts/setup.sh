@@ -2,6 +2,7 @@
 # Usage: scripts/setup.sh <skill> [git-ref]
 # Builds workspace/<skill>/.claude/skills/{<skill>,<siblings>} from a ref of the skills repo.
 # Siblings come from skills/<skill>/skill.yaml (`siblings: [...]`).
+# SKILLS=off builds an empty workspace for the no-skill arm.
 # SKILLS_REPO (default ~/repos/ai/adobe/skills) must be a clone containing the ref;
 # SKILLS_PATH (default plugins/web/skills) is where skills live inside it.
 set -euo pipefail
@@ -19,6 +20,11 @@ siblings=$(node -e "
   console.log((c.siblings||[]).join(' '))")
 
 rm -rf "$root/workspace/$skill"
+if [[ ${SKILLS:-on} == off ]]; then
+  mkdir -p "$root/workspace/$skill"
+  echo "$skill: no-skill arm, empty workspace"
+  exit 0
+fi
 for s in "$skill" $siblings; do
   mkdir -p "$base/$s"
   git -C "$repo" archive "$ref" "$path/$s" | tar -x --strip-components="$depth" -C "$base/$s"

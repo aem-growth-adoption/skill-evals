@@ -43,6 +43,17 @@ per cell): treat gaps of a few points as noise. Live sites drift, so rerun befor
 | [page-reduce](#page-reduce) | ✗ 33% (3/9) | ✗ 33% (3/9) | ✓ 100% (9/9) | ✓ 100% (9/9) | ✓ 100% (9/9) | ✗ 78% (7/9) | **haiku-5.5-low** |
 | [page-tree](#page-tree) | ✗ 44% (4/9) | ✗ 78% (7/9) | ✓ 100% (9/9) | ✓ 100% (9/9) | ✓ 100% (9/9) | ✓ 100% (9/9) | **haiku-5.5-low** |
 
+## Without the skill
+
+Same cases and graders, same prompts, but Pi has no skill loaded and the workspace contains none; runs are checked for reads of skill files (none in the runs shown). Only a few models are run this way: it is a comparison, not a benchmark.
+
+| Skill | Model | With skill | Without skill | Time with / without | Cost with / without |
+|---|---|---|---|---|---|
+| cdp-connect | haiku-5.5-low | ✓ 100% (18/18) | ✓ 94% (17/18) | 12 s / 13 s | $0.0010 / $0.0016 |
+| cdp-connect | sonnet-5.5-low | ✓ 100% (18/18) | ✓ 100% (18/18) | 11 s / 10 s | $0.019 / $0.017 |
+| page-prep | sonnet-5.5-low | ✓ 93% (25/27) | ✓ 100% (9/9) | 33 s / 15 s | $0.091 / $0.018 |
+| page-prep | haiku-5.5-low | ✓ 100% (9/9) | ✓ 100% (9/9) | 31 s / 28 s | $0.0072 / $0.0016 |
+
 ## browser-probe
 
 Floor: ≥ 90% of runs pass within 120 s. Skill ref: fix-web-skills-best-practices, fix-web-skills-best-practices@b3aa00ec.

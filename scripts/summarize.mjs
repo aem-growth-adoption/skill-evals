@@ -22,10 +22,11 @@ const runs = JSON.parse(readFileSync(file, 'utf-8')).results.results.map((r) => 
   why: r.error ?? (r.gradingResult?.componentResults ?? []).filter((c) => !c.pass && isScored(c)).map((c) => c.reason),
 }));
 
+const arm = process.env.SKILLS === 'off' ? 'no-skill' : 'skill';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const date = new Date().toISOString().slice(0, 10);
 const dir = join(root, 'results', skill);
 mkdirSync(dir, { recursive: true });
-const name = `${date}-${ref.replace(/[^\w.-]+/g, '_')}-${[...new Set(runs.map((r) => r.model))].join('+')}.json`;
-writeFileSync(join(dir, name), `${JSON.stringify({ skill, ref, date, runs }, null, 2)}\n`);
+const name = `${date}-${ref.replace(/[^\w.-]+/g, '_')}${arm === 'skill' ? '' : '-noskill'}-${[...new Set(runs.map((r) => r.model))].join('+')}.json`;
+writeFileSync(join(dir, name), `${JSON.stringify({ skill, ref, arm, date, runs }, null, 2)}\n`);
 console.log(`${runs.length} runs -> results/${skill}/${name}`);

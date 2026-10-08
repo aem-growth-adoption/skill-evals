@@ -13,6 +13,7 @@
   thinking: low
 - label: haiku-5.5-low
   rank: 3
+  noskill: true # the no-skill arm runs only on models marked noskill
   provider: azure-anthropic
   model: claude-haiku-5-5
   thinking: low
@@ -24,6 +25,7 @@
 - label: sonnet-5.5-low
   rank: 5
   baseline: true # a suite must pass here before other models are run
+  noskill: true
   provider: azure-anthropic
   model: claude-sonnet-5-5
   thinking: low

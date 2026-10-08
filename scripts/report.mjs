@@ -65,6 +65,15 @@ const costTable = table(['Skill', 'Lowest sufficient model', '$/run', 'Highest m
     if (c.lowestCost === undefined) return [sk.skill, c.lowest ?? 'none', '-', c.top ?? '-', '-', '-'];
     return [sk.skill, c.lowest, money(c.lowestCost), c.top + (c.topMeets ? '' : ' (misses floor)'), money(c.topCost), c.factor && c.lowest !== c.top ? `${fmtFactor(c.factor)}× cheaper` : 'same model'];
   }));
+const noSkillSkills = skills.filter((sk) => sk.noSkillRows.length);
+const noSkillTable = noSkillSkills.length
+  ? table(['Skill', 'Model', 'With skill', 'Without skill', 'Time with / without', 'Cost with / without'],
+    noSkillSkills.flatMap((sk) => [...new Set(sk.noSkillRows.map((r) => r.model))].map((label) => {
+      const withSkill = stats(sk.rows.filter((r) => r.model === label), sk.floor);
+      const without = stats(sk.noSkillRows.filter((r) => r.model === label), sk.floor);
+      return [sk.skill, label, cell(withSkill), cell(without), `${withSkill.avg.toFixed(0)} s / ${without.avg.toFixed(0)} s`, `${money(withSkill.cost)} / ${money(without.cost)}`];
+    })))
+  : '';
 const summary = table(['Skill', ...models.map((m) => `${m.label}${m.baseline ? ' (baseline)' : ''}`), 'Lowest model meeting the floor'], skills.map(summaryRow));
 
 writeFileSync(join(root, 'REPORT.md'), `# Skill eval report
@@ -87,6 +96,12 @@ ${costTable}
 
 ${summary}
 
+${noSkillTable ? `## Without the skill
+
+Same cases and graders, same prompts, but Pi has no skill loaded and the workspace contains none; runs are checked for reads of skill files (none in the runs shown). Only a few models are run this way: it is a comparison, not a benchmark.
+
+${noSkillTable}
+` : ''}
 ${skills.map(skillSection).join('\n')}
 ## How to read this
 

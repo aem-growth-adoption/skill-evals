@@ -38,6 +38,14 @@ eval_models() {
   last=$out
 }
 
+# The no-skill arm (SKILLS=off) is a comparison, not a benchmark: it runs only on models marked
+# `noskill` in models.yaml, unless a filter says otherwise.
+if [[ ${SKILLS:-on} == off && -z $filter ]]; then
+  filter=$(node -e "
+    const {parse}=require('yaml');
+    console.log('^(' + parse(require('fs').readFileSync('models.yaml','utf8')).filter((m)=>m.noskill).map((m)=>m.label).join('|') + ')\$')")
+fi
+
 if [[ -n $filter ]]; then
   eval_models custom "$filter"
   exit 0
