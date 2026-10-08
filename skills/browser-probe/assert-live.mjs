@@ -1,16 +1,5 @@
+import { fail, graded, ok } from '../../lib/outputs.mjs';
 import { loadWithRecipe, readOutputs, recipeProblems } from './live-lib.mjs';
-
-const fail = (reason) => ({ pass: false, score: 0, reason });
-const ok = (reason) => ({ pass: true, score: 1, reason });
-
-/** A skill that produces broken output is a benchmark failure, never a harness error. */
-const graded = (check) => (output, context) => {
-  try {
-    return check(output, context);
-  } catch (error) {
-    return fail(`check crashed on the agent's output: ${error.message.split('\n')[0]}`);
-  }
-};
 
 /** The agent produced a probe report and a recipe consistent with it. */
 export const reportAndRecipeConsistent = graded(function reportAndRecipeConsistent(_output, { vars, providerResponse }) {

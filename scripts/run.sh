@@ -7,9 +7,17 @@ ref=${2:-origin/main}
 filter=${3:-}
 cd "$(dirname "$0")/.."
 scripts/setup.sh "$skill" "$ref"
+
+if ! curl -sf -o /dev/null http://localhost:8765/index.html; then
+  node scripts/fixtures-server.mjs &
+  server=$!
+  trap 'kill $server' EXIT
+  sleep 1
+fi
+
 out=output/$skill-$(date +%Y%m%d-%H%M%S).json
 mkdir -p output
-args=(-c "skills/$skill/promptfooconfig.live.yaml" --no-cache --repeat 3 -o "$out")
+args=(-c "skills/$skill/promptfooconfig.mjs" --no-cache --repeat 3 -o "$out")
 [[ -n $filter ]] && args+=(--filter-providers "$filter")
 npx promptfoo eval "${args[@]}" || true # failing tests are benchmark data, not a script error
 node scripts/summarize.mjs "$out" "$skill" "$ref"

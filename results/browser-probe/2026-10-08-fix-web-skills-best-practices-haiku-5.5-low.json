@@ -7,43 +7,43 @@
       "model": "haiku-5.5-low",
       "site": "wknd",
       "pass": true,
-      "latency_s": 17.6,
-      "cost_usd": 0.0013,
-      "timed_out": false,
-      "why": []
-    },
-    {
-      "model": "haiku-5.5-low",
-      "site": "wknd",
-      "pass": true,
-      "latency_s": 11.6,
-      "cost_usd": 0.0013,
-      "timed_out": false,
-      "why": []
-    },
-    {
-      "model": "haiku-5.5-low",
-      "site": "wknd",
-      "pass": true,
-      "latency_s": 14.7,
-      "cost_usd": 0.0013,
-      "timed_out": false,
-      "why": []
-    },
-    {
-      "model": "haiku-5.5-low",
-      "site": "astrazeneca",
-      "pass": true,
-      "latency_s": 26.7,
-      "cost_usd": 0.002,
-      "timed_out": false,
-      "why": []
-    },
-    {
-      "model": "haiku-5.5-low",
-      "site": "astrazeneca",
-      "pass": true,
       "latency_s": 21.5,
+      "cost_usd": 0.0015,
+      "timed_out": false,
+      "why": []
+    },
+    {
+      "model": "haiku-5.5-low",
+      "site": "wknd",
+      "pass": true,
+      "latency_s": 13.7,
+      "cost_usd": 0.0015,
+      "timed_out": false,
+      "why": []
+    },
+    {
+      "model": "haiku-5.5-low",
+      "site": "wknd",
+      "pass": true,
+      "latency_s": 17.9,
+      "cost_usd": 0.0015,
+      "timed_out": false,
+      "why": []
+    },
+    {
+      "model": "haiku-5.5-low",
+      "site": "astrazeneca",
+      "pass": true,
+      "latency_s": 30,
+      "cost_usd": 0.0025,
+      "timed_out": false,
+      "why": []
+    },
+    {
+      "model": "haiku-5.5-low",
+      "site": "astrazeneca",
+      "pass": true,
+      "latency_s": 24.4,
       "cost_usd": 0.0016,
       "timed_out": false,
       "why": []
@@ -52,8 +52,8 @@
       "model": "haiku-5.5-low",
       "site": "astrazeneca",
       "pass": true,
-      "latency_s": 28.3,
-      "cost_usd": 0.0032,
+      "latency_s": 24.6,
+      "cost_usd": 0.0019,
       "timed_out": false,
       "why": []
     },
@@ -61,43 +61,34 @@
       "model": "haiku-5.5-low",
       "site": "adobe",
       "pass": true,
-      "latency_s": 35,
-      "cost_usd": 0.0027,
-      "timed_out": false,
-      "why": []
-    },
-    {
-      "model": "haiku-5.5-low",
-      "site": "adobe",
-      "pass": true,
-      "latency_s": 35.3,
-      "cost_usd": 0.0021,
-      "timed_out": false,
-      "why": []
-    },
-    {
-      "model": "haiku-5.5-low",
-      "site": "adobe",
-      "pass": true,
-      "latency_s": 48.9,
+      "latency_s": 37.1,
       "cost_usd": 0.0024,
       "timed_out": false,
       "why": []
     },
     {
       "model": "haiku-5.5-low",
-      "site": "bd",
+      "site": "adobe",
       "pass": true,
-      "latency_s": 32.7,
+      "latency_s": 25,
       "cost_usd": 0.0022,
       "timed_out": false,
       "why": []
     },
     {
       "model": "haiku-5.5-low",
+      "site": "adobe",
+      "pass": true,
+      "latency_s": 41.8,
+      "cost_usd": 0.0032,
+      "timed_out": false,
+      "why": []
+    },
+    {
+      "model": "haiku-5.5-low",
       "site": "bd",
       "pass": true,
-      "latency_s": 45.3,
+      "latency_s": 33.4,
       "cost_usd": 0.0024,
       "timed_out": false,
       "why": []
@@ -106,8 +97,17 @@
       "model": "haiku-5.5-low",
       "site": "bd",
       "pass": true,
-      "latency_s": 31.7,
-      "cost_usd": 0.0021,
+      "latency_s": 49.7,
+      "cost_usd": 0.0024,
+      "timed_out": false,
+      "why": []
+    },
+    {
+      "model": "haiku-5.5-low",
+      "site": "bd",
+      "pass": true,
+      "latency_s": 32.2,
+      "cost_usd": 0.0023,
       "timed_out": false,
       "why": []
     }

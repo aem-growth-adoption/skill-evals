@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto';
 import { cpSync, mkdirSync, mkdtempSync, readFileSync } from 'node:fs';
 import { basename, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -8,6 +9,7 @@ import {
   getAgentDir,
   ModelRuntime,
   SessionManager,
+  SettingsManager,
 } from '@earendil-works/pi-coding-agent';
 
 /**
@@ -17,7 +19,9 @@ import {
  * provider, model, thinking (off|low|medium|high); working_dir,
  * workspace_root (run in a kept copy of working_dir under this directory),
  * skills (paths of skill folders; discovery is
- * otherwise disabled), tools (names), timeout_ms.
+ * otherwise disabled), tools (names), timeout_ms,
+ * shell_env (variables exported before every shell command; `{run_id}` becomes a
+ * unique id per call, reported as metadata.runId, e.g. to isolate PLAYWRIGHT_CLI_SESSION).
  * A session that exceeds timeout_ms is aborted and returned as a normal (failing)
  * result with metadata.timedOut; only provider/API failures surface as errors.
  * Reports `metadata.toolCalls` and `metadata.skillCalls` (a `read` of a
@@ -38,6 +42,7 @@ export default class PiProvider {
     const { provider, model, thinking = 'off', skills = [], tools, timeout_ms: timeoutMs = 600_000 } = this.config;
     if (!provider || !model) throw new Error('pi provider: config.provider and config.model are required');
 
+    const runId = randomUUID().slice(0, 8);
     const cwd = this.#prepareWorkspace();
     const skillPaths = skills.map((p) => resolve(p));
     const modelRuntime = await ModelRuntime.create();
@@ -63,6 +68,7 @@ export default class PiProvider {
       modelRuntime,
       resourceLoader: loader,
       sessionManager: SessionManager.inMemory(cwd),
+      settingsManager: SettingsManager.inMemory(shellSettings(this.config.shell_env, runId)),
       ...(tools && { tools }),
     });
 
@@ -92,6 +98,7 @@ export default class PiProvider {
         },
         metadata: {
           workingDir: cwd,
+          runId,
           timedOut: outcome === timedOut,
           toolCalls,
           skillCalls: skillCallsFrom(toolCalls, skillNames),
@@ -116,6 +123,11 @@ export default class PiProvider {
     cpSync(dir, copy, { recursive: true });
     return copy;
   }
+}
+
+function shellSettings(shellEnv = {}, runId) {
+  const exports = Object.entries(shellEnv).map(([k, v]) => `export ${k}=${JSON.stringify(String(v).replaceAll('{run_id}', runId))}`);
+  return exports.length ? { shellCommandPrefix: exports.join('; ') } : {};
 }
 
 function modelByLabel(label) {

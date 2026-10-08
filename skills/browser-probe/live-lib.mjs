@@ -1,9 +1,10 @@
 import { execFileSync } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
+import { readJson } from '../../lib/outputs.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 // The copy of the skill under test that scripts/setup.sh put in the workspace.
@@ -21,24 +22,11 @@ const HEALTH_JS = `JSON.stringify({
 const pw = (session, ...args) =>
   execFileSync('playwright-cli', [`-s=${session}`, ...args], { encoding: 'utf-8', timeout: 60_000 }).trim();
 
-/** Missing or malformed files read as null so assertions report them as failures, not crashes. */
-function readJson(path) {
-  if (!existsSync(path)) return null;
-  try {
-    return JSON.parse(readFileSync(path, 'utf-8'));
-  } catch {
-    return null;
-  }
-}
-
-/** Reads the agent's files from `<workspace>/out` of the run that produced `providerResponse`. */
-export function readOutputs(providerResponse) {
-  const dir = join(providerResponse.metadata.workingDir, 'out');
-  return {
-    report: readJson(join(dir, 'probe-report.json')),
-    recipe: readJson(join(dir, 'browser-recipe.json')),
-  };
-}
+/** Reads the agent's files from the `out` dir of the run that produced `providerResponse`. */
+export const readOutputs = (providerResponse) => ({
+  report: readJson(providerResponse, 'probe-report.json'),
+  recipe: readJson(providerResponse, 'browser-recipe.json'),
+});
 
 /** Expected recipe shape for each probe step, from the SKILL.md mapping table. */
 export function recipeProblems(recipe, firstSuccess) {
