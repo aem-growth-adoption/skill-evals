@@ -6,7 +6,7 @@ the skills repo.
 
 ```
 scripts/run.sh <skill> [git-ref] [provider-regex]   # set up workspace, run 3x per case, store summary
-node scripts/report.mjs                             # results/ -> REPORT.md
+npm run report                                      # results/ -> REPORT.html, REPORT.md, REPORT-detail.html
 ```
 
 - `models.yaml`: model matrix, ranked low to high. Credentials come from your local Pi setup.
@@ -18,6 +18,14 @@ node scripts/report.mjs                             # results/ -> REPORT.md
   (started by `run.sh`). Each suite mixes fixtures (known ground truth) with real sites.
 - `results/`: one summary per run. Raw promptfoo output stays in `output/` (gitignored); do not use
   `promptfoo share`, results contain real site names.
+
+## Reports
+
+- `REPORT.html`: the one-page gist, skills x models, coloured by whether the model meets the skill's floor.
+- `REPORT.md`: the gist plus per-skill tables, per-case matrices and common failure reasons.
+- `REPORT-detail.html` (not committed, `npm run report` builds it): the per-case matrix rendered by
+  promptfoo itself. `lib/replay-provider.mjs` replays stored results, so no model is called.
+- `npx promptfoo view`: every raw run on this machine, with the agents' outputs and assertion reasons.
 
 ## How a run is graded
 

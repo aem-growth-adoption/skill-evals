@@ -1,42 +1,12 @@
 #!/usr/bin/env node
 // Aggregates results/<skill>/*.json into REPORT.md:
-//   1. a skill x model matrix (share of runs that passed within the skill's floor) with the
-//      lowest model meeting each floor,
-//   2. per skill: model stats, a case x model matrix and the most common failure reasons.
-import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { parse } from 'yaml';
-
-const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const models = parse(readFileSync(join(root, 'models.yaml'), 'utf-8')).sort((a, b) => a.rank - b.rank);
-const read = (...p) => readFileSync(join(root, ...p), 'utf-8');
-const pct = (n, d) => (d ? `${Math.round((100 * n) / d)}%` : '-');
-
-const loadSkill = (skill) => {
-  const { floor } = parse(read('skills', skill, 'skill.yaml'));
-  const files = readdirSync(join(root, 'results', skill)).filter((f) => f.endsWith('.json'));
-  const summaries = files.map((f) => JSON.parse(read('results', skill, f)));
-  return { skill, floor, rows: summaries.flatMap((s) => s.runs), refs: [...new Set(summaries.map((s) => s.ref))] };
-};
-
-const isGood = (r, floor) => r.pass && r.latency_s <= floor.max_latency_s;
-const stats = (runs, floor) => {
-  const sorted = runs.map((r) => r.latency_s).sort((a, b) => a - b);
-  const good = runs.filter((r) => isGood(r, floor)).length;
-  return {
-    n: runs.length,
-    good,
-    meets: runs.length > 0 && good / runs.length >= floor.min_pass_rate,
-    avg: runs.reduce((s, r) => s + r.latency_s, 0) / (runs.length || 1),
-    p95: sorted[Math.min(sorted.length - 1, Math.ceil(0.95 * sorted.length) - 1)] ?? 0,
-    timeouts: runs.filter((r) => r.timed_out).length,
-    cost: runs.reduce((s, r) => s + r.cost_usd, 0) / (runs.length || 1),
-  };
-};
-
-const cell = (s) => (s.n ? `${s.meets ? '✓' : '✗'} ${pct(s.good, s.n)} (${s.good}/${s.n})` : '·');
-const table = (head, rows) => [`| ${head.join(' | ')} |`, `|${head.map(() => '---').join('|')}|`, ...rows.map((r) => `| ${r.join(' | ')} |`)].join('\n');
+//   1. the gist: lowest model meeting each skill's floor,
+//   2. a skill x model matrix (share of runs that passed within the skill's floor),
+//   3. per skill: model stats, a case x model matrix and the most common failure reasons.
+// scripts/promptfoo-report.mjs renders the same data as promptfoo HTML reports.
+import { writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { cell, isGood, loadSkills, models, pct, root, stats, table } from '../lib/results.mjs';
 
 /** Failure reasons with numbers and quoted values stripped, so similar failures group together. */
 const reasonKey = (r) => {
@@ -76,9 +46,18 @@ function skillSection(sk) {
   return lines.join('\n');
 }
 
-const skills = readdirSync(join(root, 'skills')).filter((s) => readdirSync(join(root, 'results')).includes(s)).map(loadSkill);
+const skills = loadSkills();
 const known = new Set(models.map((m) => m.label));
 const totalRuns = skills.reduce((n, s) => n + s.rows.filter((r) => known.has(r.model)).length, 0);
+const lowestFor = (sk) => {
+  const per = models.map((m) => stats(sk.rows.filter((r) => r.model === m.label), sk.floor));
+  const baseline = models.findIndex((m) => m.baseline);
+  return { lowest: models.find((_, i) => per[i].meets)?.label ?? 'none', baselineOk: baseline < 0 || per[baseline].meets };
+};
+const gist = skills
+  .map((sk) => ({ skill: sk.skill, ...lowestFor(sk) }))
+  .map(({ skill, lowest, baselineOk }) => `- **${skill}**: ${lowest}${baselineOk ? '' : ' (baseline below its floor, treat as provisional)'}`)
+  .join('\n');
 const summary = table(['Skill', ...models.map((m) => `${m.label}${m.baseline ? ' (baseline)' : ''}`), 'Lowest model meeting the floor'], skills.map(summaryRow));
 
 writeFileSync(join(root, 'REPORT.md'), `# Skill eval report
@@ -87,6 +66,12 @@ ${skills.length} skills, ${models.length} models, ${totalRuns} runs. Models are 
 Each cell is the share of runs that passed within the skill's time budget; ✓ means it meets the skill's floor
 (see each section), ✗ that it does not, · that the model was not run. Numbers rest on small samples (9 to 27 runs
 per cell): treat gaps of a few points as noise. Live sites drift, so rerun before relying on one result.
+
+## The gist
+
+${gist}
+
+## Skill x model matrix
 
 ${summary}
 

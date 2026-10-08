@@ -5,6 +5,19 @@ Each cell is the share of runs that passed within the skill's time budget; ✓ m
 (see each section), ✗ that it does not, · that the model was not run. Numbers rest on small samples (9 to 27 runs
 per cell): treat gaps of a few points as noise. Live sites drift, so rerun before relying on one result.
 
+## The gist
+
+- **browser-probe**: haiku-5.5-low
+- **cdp-connect**: gemma-4-26b-cf
+- **cdp-ext-pilot**: gemma-4-26b-cf
+- **page-collect**: gpt-6-sol-low
+- **page-langs**: gemma-4-26b-cf
+- **page-prep**: haiku-5.5-low
+- **page-reduce**: haiku-5.5-low
+- **page-tree**: haiku-5.5-low
+
+## Skill x model matrix
+
 | Skill | gemma-4-26b-cf | qwen3.8-27b-cf | haiku-5.5-low | gpt-6-sol-low | sonnet-5.5-low (baseline) | Lowest model meeting the floor |
 |---|---|---|---|---|---|---|
 | [browser-probe](#browser-probe) | ✗ 50% (6/12) | ✗ 42% (5/12) | ✓ 100% (24/24) | ✓ 92% (11/12) | ✓ 100% (12/12) | **haiku-5.5-low** |

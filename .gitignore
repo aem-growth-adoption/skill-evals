@@ -3,3 +3,4 @@ workspace/
 live-out/
 output/
 .playwright-cli/
+REPORT-detail.html
