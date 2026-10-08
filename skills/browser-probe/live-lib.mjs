@@ -1,15 +1,39 @@
 import { execFileSync } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { join } from 'node:path';
 import { tmpdir } from 'node:os';
-import { fileURLToPath } from 'node:url';
 import { readJson } from '../../lib/outputs.mjs';
 
-const here = dirname(fileURLToPath(import.meta.url));
-// The copy of the skill under test that scripts/setup.sh put in the workspace.
-const SKILL_DIR = resolve(here, '../../workspace/browser-probe/.claude/skills/browser-probe');
-const { checkHealth, parseEvalOutput } = await import(join(SKILL_DIR, 'scripts/browser-probe.js'));
+// The grader's own copy of the skill's page-health rules. Keeping it here means no copy of the skill has to
+// sit anywhere an agent could find it, which matters for the no-skill arm.
+const ERROR_TITLE_PATTERN = /error|denied|blocked|not satisfied|403|captcha|challenge|attention required|just a moment/i;
+const MIN_BODY_LENGTH = 100;
+
+function checkHealth(health) {
+  if (health.url?.startsWith('chrome-error://')) return 'blocked';
+  if (health.status === 0 || health.status >= 400) return 'blocked';
+  if (ERROR_TITLE_PATTERN.test(health.title)) return 'blocked';
+  if (health.bodyLength < MIN_BODY_LENGTH && !health.hasMainContent) return 'blocked';
+  return 'success';
+}
+
+/** Unwraps the value printed by `playwright-cli eval`. */
+function parseEvalOutput(raw) {
+  const start = raw.indexOf('### Result');
+  if (start === -1) return raw;
+  const end = raw.indexOf('### Ran Playwright code');
+  let value = raw.slice(start + '### Result'.length, end === -1 ? undefined : end).trim();
+  if (value.startsWith('"') && value.endsWith('"')) {
+    try {
+      const parsed = JSON.parse(value);
+      value = typeof parsed === 'string' ? parsed : value.slice(1, -1);
+    } catch {
+      value = value.slice(1, -1);
+    }
+  }
+  return value;
+}
 
 const HEALTH_JS = `JSON.stringify({
   title: document.title || '',

@@ -69,7 +69,8 @@ const noSkillSkills = skills.filter((sk) => sk.noSkillRows.length);
 const noSkillTable = noSkillSkills.length
   ? table(['Skill', 'Model', 'With skill', 'Without skill', 'Time with / without', 'Cost with / without'],
     noSkillSkills.flatMap((sk) => [...new Set(sk.noSkillRows.map((r) => r.model))].map((label) => {
-      const withSkill = stats(sk.rows.filter((r) => r.model === label), sk.floor);
+      const cases = new Set(sk.noSkillRows.map((r) => r.case));
+      const withSkill = stats(sk.rows.filter((r) => r.model === label && cases.has(r.case)), sk.floor);
       const without = stats(sk.noSkillRows.filter((r) => r.model === label), sk.floor);
       return [sk.skill, label, cell(withSkill), cell(without), `${withSkill.avg.toFixed(0)} s / ${without.avg.toFixed(0)} s`, `${money(withSkill.cost)} / ${money(without.cost)}`];
     })))
@@ -98,7 +99,7 @@ ${summary}
 
 ${noSkillTable ? `## Without the skill
 
-Same cases and graders, same prompts, but Pi has no skill loaded and the workspace contains none; runs are checked for reads of skill files (none in the runs shown). Only a few models are run this way: it is a comparison, not a benchmark.
+Same cases and the same graders, but Pi has no skill loaded and the workspace contains none; runs are checked for reads of skill files. The prompt gets one addition: the output format (file names and fields, never how to produce them), because the graders read the skill's own formats. Cases that depend on a skill's own method are left out, and browser-probe is judged on "the recipe really loads the page" only. With-skill figures are restricted to the same cases. Only a few models are run this way: it is a comparison, not a benchmark.
 
 ${noSkillTable}
 ` : ''}

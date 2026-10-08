@@ -19,12 +19,20 @@ siblings=$(node -e "
   const c=parse(require('fs').readFileSync('$root/skills/$skill/skill.yaml','utf8'));
   console.log((c.siblings||[]).join(' '))")
 
-rm -rf "$root/workspace/$skill"
 if [[ ${SKILLS:-on} == off ]]; then
-  mkdir -p "$root/workspace/$skill"
-  echo "$skill: no-skill arm, empty workspace"
+  # No-skill arm: an empty workspace outside the repo and a private $HOME with no skills in it.
+  # Only what browsers and npm need is linked in, so playwright-cli still finds its browsers.
+  base=/tmp/skill-evals-noskill
+  rm -rf "${base:?}/$skill"
+  mkdir -p "$base/$skill" "$base/home"
+  for d in Library .cache .npm; do
+    [[ -e $HOME/$d && ! -e $base/home/$d ]] && ln -s "$HOME/$d" "$base/home/$d"
+  done
+  echo "$skill: no-skill arm, empty workspace in $base"
   exit 0
 fi
+
+rm -rf "$root/workspace/$skill"
 for s in "$skill" $siblings; do
   mkdir -p "$base/$s"
   git -C "$repo" archive "$ref" "$path/$s" | tar -x --strip-components="$depth" -C "$base/$s"

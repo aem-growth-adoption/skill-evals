@@ -188,6 +188,57 @@
 <rect x="150" y="336" width="4" height="16" rx="3" fill="#147d42"/><text x="160" y="349" class="t2">$0.0017 haiku-5.5-low</text>
 <rect x="150" y="355" width="118" height="16" rx="3" fill="#b4561d"/><text x="274" y="368" class="t2">$0.053 opus-5.5-low</text></svg>
 
+<h2>Is the skill needed at all?</h2>
+<p>The same cases also run with the skill withheld. Pi loads no skill and the workspace holds none, and a grader fails any run that opens a skill file from disk (the skills are installed on this machine, so this is checked, not assumed). The graders read the skills' own output formats, so this arm's prompt adds the output format, meaning file names and fields, never how to produce them. Cases that hinge on a skill's own method are left out, and browser-probe is judged only on whether the recipe loads the page. To limit cost it runs on two models only.</p>
+<svg viewBox="0 0 980 516" role="img" aria-label="With and without the skill">
+<text x="230" y="14" class="t2">share of runs within the floor: with the skill (green) and without it (orange)</text>
+<text x="0" y="44" class="t3">browser-probe · sonnet</text>
+<rect x="230" y="26" width="600" height="12" rx="3" fill="#147d42"/><text x="836" y="36" class="t2">100%</text>
+<rect x="230" y="40" width="600" height="12" rx="3" fill="#b4561d"/><text x="836" y="50" class="t2">100%</text>
+<text x="0" y="78" class="t3">browser-probe · haiku</text>
+<rect x="230" y="60" width="600" height="12" rx="3" fill="#147d42"/><text x="836" y="70" class="t2">100%</text>
+<rect x="230" y="74" width="350" height="12" rx="3" fill="#b4561d"/><text x="586" y="84" class="t2">58%</text>
+<text x="0" y="112" class="t3">cdp-connect · haiku</text>
+<rect x="230" y="94" width="600" height="12" rx="3" fill="#147d42"/><text x="836" y="104" class="t2">100%</text>
+<rect x="230" y="108" width="533" height="12" rx="3" fill="#b4561d"/><text x="769" y="118" class="t2">89%</text>
+<text x="0" y="146" class="t3">cdp-connect · sonnet</text>
+<rect x="230" y="128" width="600" height="12" rx="3" fill="#147d42"/><text x="836" y="138" class="t2">100%</text>
+<rect x="230" y="142" width="567" height="12" rx="3" fill="#b4561d"/><text x="803" y="152" class="t2">94%</text>
+<text x="0" y="180" class="t3">page-collect · sonnet</text>
+<rect x="230" y="162" width="600" height="12" rx="3" fill="#147d42"/><text x="836" y="172" class="t2">100%</text>
+<rect x="230" y="176" width="600" height="12" rx="3" fill="#b4561d"/><text x="836" y="186" class="t2">100%</text>
+<text x="0" y="214" class="t3">page-collect · haiku</text>
+<rect x="230" y="196" width="467" height="12" rx="3" fill="#147d42"/><text x="703" y="206" class="t2">78%</text>
+<rect x="230" y="210" width="600" height="12" rx="3" fill="#b4561d"/><text x="836" y="220" class="t2">100%</text>
+<text x="0" y="248" class="t3">page-langs · sonnet</text>
+<rect x="230" y="230" width="600" height="12" rx="3" fill="#147d42"/><text x="836" y="240" class="t2">100%</text>
+<rect x="230" y="244" width="500" height="12" rx="3" fill="#b4561d"/><text x="736" y="254" class="t2">83%</text>
+<text x="0" y="282" class="t3">page-langs · haiku</text>
+<rect x="230" y="264" width="600" height="12" rx="3" fill="#147d42"/><text x="836" y="274" class="t2">100%</text>
+<rect x="230" y="278" width="600" height="12" rx="3" fill="#b4561d"/><text x="836" y="288" class="t2">100%</text>
+<text x="0" y="316" class="t3">page-prep · sonnet</text>
+<rect x="230" y="298" width="556" height="12" rx="3" fill="#147d42"/><text x="792" y="308" class="t2">93%</text>
+<rect x="230" y="312" width="600" height="12" rx="3" fill="#b4561d"/><text x="836" y="322" class="t2">100%</text>
+<text x="0" y="350" class="t3">page-prep · haiku</text>
+<rect x="230" y="332" width="600" height="12" rx="3" fill="#147d42"/><text x="836" y="342" class="t2">100%</text>
+<rect x="230" y="346" width="600" height="12" rx="3" fill="#b4561d"/><text x="836" y="356" class="t2">100%</text>
+<text x="0" y="384" class="t3">page-reduce · sonnet</text>
+<rect x="230" y="366" width="600" height="12" rx="3" fill="#147d42"/><text x="836" y="376" class="t2">100%</text>
+<rect x="230" y="380" width="300" height="12" rx="3" fill="#b4561d"/><text x="536" y="390" class="t2">50%</text>
+<text x="0" y="418" class="t3">page-reduce · haiku</text>
+<rect x="230" y="400" width="600" height="12" rx="3" fill="#147d42"/><text x="836" y="410" class="t2">100%</text>
+<rect x="230" y="414" width="500" height="12" rx="3" fill="#b4561d"/><text x="736" y="424" class="t2">83%</text>
+<text x="0" y="452" class="t3">page-tree · haiku</text>
+<rect x="230" y="434" width="600" height="12" rx="3" fill="#147d42"/><text x="836" y="444" class="t2">100%</text>
+<rect x="230" y="448" width="267" height="12" rx="3" fill="#b4561d"/><text x="503" y="458" class="t2">44%</text>
+<text x="0" y="486" class="t3">page-tree · sonnet</text>
+<rect x="230" y="468" width="600" height="12" rx="3" fill="#147d42"/><text x="836" y="478" class="t2">100%</text>
+<rect x="230" y="482" width="467" height="12" rx="3" fill="#b4561d"/><text x="703" y="492" class="t2">78%</text></svg>
+<p style="color:var(--muted);font-size:14px">Read it as: how much of the skill's value is more than a clear output format. Where the bars match, a strong model manages without the skill; where the orange bar is short, the skill's method is doing the work.</p>
+
+<h2>Browsers stay invisible</h2>
+<p>Evals must never open a window on the machine running them. Every agent shell refuses <code>--headed</code> and <code>open</code>, a grader fails any run that still tried, and a sweeper kills automation browsers started without <code>--headless</code>. The extension skill, which launches a headed Chromium by default, goes through a headless shim.</p>
+
 <h2>Coverage</h2>
 <table><thead><tr><th>Skill</th><th>Fixture cases</th><th>Real-site cases</th><th>Time budget</th></tr></thead><tbody>
 <tr><td>browser-probe</td><td>0</td><td>4</td><td>120 s</td></tr>

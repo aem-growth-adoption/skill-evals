@@ -29,6 +29,18 @@ npm run report                                      # results/ -> REPORT.html, M
   promptfoo itself. `lib/replay-provider.mjs` replays stored results, so no model is called.
 - `npx promptfoo view`: every raw run on this machine, with the agents' outputs and assertion reasons.
 
+## The no-skill arm
+
+`SKILLS=off scripts/run.sh <skill> <ref>` runs the same cases with the skill withheld, on the models marked
+`noskill` in `models.yaml` (a comparison, not a benchmark). Pi loads no skill, the agent works in an empty
+directory under `/tmp/skill-evals-noskill` with a private `$HOME` that has no skills in it, and the prompt adds
+the output format (file names and fields, never the method). A grader fails any run that opens a skill file
+from disk. Cases that hinge on a skill's own method have `metadata: { noskill: skip }`. Results are stored with
+`arm: no-skill` and shown in the "Without the skill" table of `REPORT.md`.
+
+All browsers are headless in both arms: agent shells refuse `--headed` and `open`, a grader fails runs that
+tried, and a sweeper kills automation browsers started without `--headless`.
+
 ## Publishing the report
 
 `.github/workflows/pages.yml` publishes `REPORT.html` (index) and `METHODOLOGY.html` whenever either

@@ -8,8 +8,8 @@
       "model": "haiku-5.5-low",
       "case": "fill and submit the greeter form",
       "pass": true,
-      "latency_s": 12.9,
-      "cost_usd": 0.0018,
+      "latency_s": 10.8,
+      "cost_usd": 0.0013,
       "timed_out": false,
       "why": []
     },
@@ -17,8 +17,8 @@
       "model": "sonnet-5.5-low",
       "case": "fill and submit the greeter form",
       "pass": true,
-      "latency_s": 9.1,
-      "cost_usd": 0.0146,
+      "latency_s": 8.9,
+      "cost_usd": 0.0152,
       "timed_out": false,
       "why": []
     },
@@ -26,7 +26,7 @@
       "model": "haiku-5.5-low",
       "case": "fill and submit the greeter form",
       "pass": false,
-      "latency_s": 8.9,
+      "latency_s": 8.4,
       "cost_usd": 0.001,
       "timed_out": false,
       "why": "check crashed on the agent's output: no tab on cdp-app.html"
@@ -35,26 +35,44 @@
       "model": "sonnet-5.5-low",
       "case": "fill and submit the greeter form",
       "pass": true,
-      "latency_s": 9.4,
-      "cost_usd": 0.0149,
+      "latency_s": 9.8,
+      "cost_usd": 0.0165,
       "timed_out": false,
       "why": []
     },
     {
       "model": "haiku-5.5-low",
       "case": "fill and submit the greeter form",
+      "pass": false,
+      "latency_s": 6.1,
+      "cost_usd": 0.0008,
+      "timed_out": false,
+      "why": "check crashed on the agent's output: no tab on cdp-app.html"
+    },
+    {
+      "model": "sonnet-5.5-low",
+      "case": "fill and submit the greeter form",
+      "pass": false,
+      "latency_s": 9,
+      "cost_usd": 0.0141,
+      "timed_out": false,
+      "why": "check crashed on the agent's output: no tab on cdp-app.html"
+    },
+    {
+      "model": "haiku-5.5-low",
+      "case": "screenshot",
       "pass": true,
-      "latency_s": 13.9,
-      "cost_usd": 0.0017,
+      "latency_s": 12.2,
+      "cost_usd": 0.0014,
       "timed_out": false,
       "why": []
     },
     {
       "model": "sonnet-5.5-low",
-      "case": "fill and submit the greeter form",
+      "case": "screenshot",
       "pass": true,
       "latency_s": 9.1,
-      "cost_usd": 0.0155,
+      "cost_usd": 0.0127,
       "timed_out": false,
       "why": []
     },
@@ -62,25 +80,7 @@
       "model": "haiku-5.5-low",
       "case": "screenshot",
       "pass": true,
-      "latency_s": 16.6,
-      "cost_usd": 0.0011,
-      "timed_out": false,
-      "why": []
-    },
-    {
-      "model": "sonnet-5.5-low",
-      "case": "screenshot",
-      "pass": true,
-      "latency_s": 8.9,
-      "cost_usd": 0.0124,
-      "timed_out": false,
-      "why": []
-    },
-    {
-      "model": "haiku-5.5-low",
-      "case": "screenshot",
-      "pass": true,
-      "latency_s": 7.6,
+      "latency_s": 9.4,
       "cost_usd": 0.001,
       "timed_out": false,
       "why": []
@@ -89,8 +89,8 @@
       "model": "sonnet-5.5-low",
       "case": "screenshot",
       "pass": true,
-      "latency_s": 8.6,
-      "cost_usd": 0.012,
+      "latency_s": 9.2,
+      "cost_usd": 0.0126,
       "timed_out": false,
       "why": []
     },
@@ -98,8 +98,8 @@
       "model": "haiku-5.5-low",
       "case": "screenshot",
       "pass": true,
-      "latency_s": 9.8,
-      "cost_usd": 0.0009,
+      "latency_s": 7.1,
+      "cost_usd": 0.0008,
       "timed_out": false,
       "why": []
     },
@@ -107,8 +107,8 @@
       "model": "sonnet-5.5-low",
       "case": "screenshot",
       "pass": true,
-      "latency_s": 8.6,
-      "cost_usd": 0.0125,
+      "latency_s": 9.1,
+      "cost_usd": 0.0124,
       "timed_out": false,
       "why": []
     },
@@ -116,8 +116,8 @@
       "model": "haiku-5.5-low",
       "case": "network request on load",
       "pass": true,
-      "latency_s": 20.2,
-      "cost_usd": 0.0024,
+      "latency_s": 5,
+      "cost_usd": 0.0006,
       "timed_out": false,
       "why": []
     },
@@ -125,35 +125,17 @@
       "model": "sonnet-5.5-low",
       "case": "network request on load",
       "pass": true,
-      "latency_s": 10.6,
-      "cost_usd": 0.0634,
+      "latency_s": 5.2,
+      "cost_usd": 0.0099,
       "timed_out": false,
       "why": []
     },
     {
       "model": "haiku-5.5-low",
-      "case": "network request on load",
-      "pass": true,
-      "latency_s": 15.2,
-      "cost_usd": 0.0044,
-      "timed_out": false,
-      "why": []
-    },
-    {
-      "model": "sonnet-5.5-low",
       "case": "network request on load",
       "pass": true,
       "latency_s": 9.1,
-      "cost_usd": 0.0144,
-      "timed_out": false,
-      "why": []
-    },
-    {
-      "model": "haiku-5.5-low",
-      "case": "network request on load",
-      "pass": true,
-      "latency_s": 13.2,
-      "cost_usd": 0.002,
+      "cost_usd": 0.001,
       "timed_out": false,
       "why": []
     },
@@ -161,8 +143,26 @@
       "model": "sonnet-5.5-low",
       "case": "network request on load",
       "pass": true,
-      "latency_s": 11.3,
-      "cost_usd": 0.0156,
+      "latency_s": 5.5,
+      "cost_usd": 0.0098,
+      "timed_out": false,
+      "why": []
+    },
+    {
+      "model": "haiku-5.5-low",
+      "case": "network request on load",
+      "pass": true,
+      "latency_s": 6.3,
+      "cost_usd": 0.0007,
+      "timed_out": false,
+      "why": []
+    },
+    {
+      "model": "sonnet-5.5-low",
+      "case": "network request on load",
+      "pass": true,
+      "latency_s": 5.7,
+      "cost_usd": 0.0096,
       "timed_out": false,
       "why": []
     },
@@ -170,7 +170,43 @@
       "model": "haiku-5.5-low",
       "case": "accessible buttons",
       "pass": true,
-      "latency_s": 11.8,
+      "latency_s": 14.2,
+      "cost_usd": 0.0016,
+      "timed_out": false,
+      "why": []
+    },
+    {
+      "model": "sonnet-5.5-low",
+      "case": "accessible buttons",
+      "pass": true,
+      "latency_s": 8.8,
+      "cost_usd": 0.012,
+      "timed_out": false,
+      "why": []
+    },
+    {
+      "model": "haiku-5.5-low",
+      "case": "accessible buttons",
+      "pass": true,
+      "latency_s": 11.2,
+      "cost_usd": 0.0014,
+      "timed_out": false,
+      "why": []
+    },
+    {
+      "model": "sonnet-5.5-low",
+      "case": "accessible buttons",
+      "pass": true,
+      "latency_s": 9.4,
+      "cost_usd": 0.0128,
+      "timed_out": false,
+      "why": []
+    },
+    {
+      "model": "haiku-5.5-low",
+      "case": "accessible buttons",
+      "pass": true,
+      "latency_s": 10.6,
       "cost_usd": 0.0013,
       "timed_out": false,
       "why": []
@@ -179,44 +215,8 @@
       "model": "sonnet-5.5-low",
       "case": "accessible buttons",
       "pass": true,
-      "latency_s": 7.1,
-      "cost_usd": 0.0124,
-      "timed_out": false,
-      "why": []
-    },
-    {
-      "model": "haiku-5.5-low",
-      "case": "accessible buttons",
-      "pass": true,
-      "latency_s": 10.7,
-      "cost_usd": 0.0012,
-      "timed_out": false,
-      "why": []
-    },
-    {
-      "model": "sonnet-5.5-low",
-      "case": "accessible buttons",
-      "pass": true,
-      "latency_s": 8,
-      "cost_usd": 0.0123,
-      "timed_out": false,
-      "why": []
-    },
-    {
-      "model": "haiku-5.5-low",
-      "case": "accessible buttons",
-      "pass": true,
-      "latency_s": 9.9,
-      "cost_usd": 0.0011,
-      "timed_out": false,
-      "why": []
-    },
-    {
-      "model": "sonnet-5.5-low",
-      "case": "accessible buttons",
-      "pass": true,
-      "latency_s": 8,
-      "cost_usd": 0.0124,
+      "latency_s": 9.4,
+      "cost_usd": 0.013,
       "timed_out": false,
       "why": []
     },
@@ -224,8 +224,8 @@
       "model": "haiku-5.5-low",
       "case": "several tabs, click in the right one",
       "pass": true,
-      "latency_s": 9.1,
-      "cost_usd": 0.0013,
+      "latency_s": 10.4,
+      "cost_usd": 0.0016,
       "timed_out": false,
       "why": []
     },
@@ -234,7 +234,7 @@
       "case": "several tabs, click in the right one",
       "pass": true,
       "latency_s": 7,
-      "cost_usd": 0.0133,
+      "cost_usd": 0.0139,
       "timed_out": false,
       "why": []
     },
@@ -242,8 +242,8 @@
       "model": "haiku-5.5-low",
       "case": "several tabs, click in the right one",
       "pass": true,
-      "latency_s": 5.9,
-      "cost_usd": 0.001,
+      "latency_s": 24.1,
+      "cost_usd": 0.0014,
       "timed_out": false,
       "why": []
     },
@@ -251,8 +251,8 @@
       "model": "sonnet-5.5-low",
       "case": "several tabs, click in the right one",
       "pass": true,
-      "latency_s": 6.7,
-      "cost_usd": 0.0135,
+      "latency_s": 9,
+      "cost_usd": 0.0138,
       "timed_out": false,
       "why": []
     },
@@ -260,7 +260,7 @@
       "model": "haiku-5.5-low",
       "case": "several tabs, click in the right one",
       "pass": true,
-      "latency_s": 9.4,
+      "latency_s": 10.2,
       "cost_usd": 0.0015,
       "timed_out": false,
       "why": []
@@ -269,8 +269,8 @@
       "model": "sonnet-5.5-low",
       "case": "several tabs, click in the right one",
       "pass": true,
-      "latency_s": 7.5,
-      "cost_usd": 0.0143,
+      "latency_s": 6.8,
+      "cost_usd": 0.0134,
       "timed_out": false,
       "why": []
     },
@@ -278,8 +278,8 @@
       "model": "haiku-5.5-low",
       "case": "console output after a reload",
       "pass": true,
-      "latency_s": 15.3,
-      "cost_usd": 0.0013,
+      "latency_s": 33.1,
+      "cost_usd": 0.0019,
       "timed_out": false,
       "why": []
     },
@@ -287,8 +287,8 @@
       "model": "sonnet-5.5-low",
       "case": "console output after a reload",
       "pass": true,
-      "latency_s": 15.2,
-      "cost_usd": 0.0181,
+      "latency_s": 15.1,
+      "cost_usd": 0.0193,
       "timed_out": false,
       "why": []
     },
@@ -296,7 +296,25 @@
       "model": "haiku-5.5-low",
       "case": "console output after a reload",
       "pass": true,
-      "latency_s": 21.8,
+      "latency_s": 19.7,
+      "cost_usd": 0.002,
+      "timed_out": false,
+      "why": []
+    },
+    {
+      "model": "sonnet-5.5-low",
+      "case": "console output after a reload",
+      "pass": true,
+      "latency_s": 24.1,
+      "cost_usd": 0.0252,
+      "timed_out": false,
+      "why": []
+    },
+    {
+      "model": "haiku-5.5-low",
+      "case": "console output after a reload",
+      "pass": true,
+      "latency_s": 15.9,
       "cost_usd": 0.0018,
       "timed_out": false,
       "why": []
@@ -305,26 +323,8 @@
       "model": "sonnet-5.5-low",
       "case": "console output after a reload",
       "pass": true,
-      "latency_s": 15.7,
-      "cost_usd": 0.0167,
-      "timed_out": false,
-      "why": []
-    },
-    {
-      "model": "haiku-5.5-low",
-      "case": "console output after a reload",
-      "pass": true,
-      "latency_s": 13.3,
-      "cost_usd": 0.0013,
-      "timed_out": false,
-      "why": []
-    },
-    {
-      "model": "sonnet-5.5-low",
-      "case": "console output after a reload",
-      "pass": true,
       "latency_s": 14.4,
-      "cost_usd": 0.0194,
+      "cost_usd": 0.017,
       "timed_out": false,
       "why": []
     }

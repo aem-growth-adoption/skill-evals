@@ -25,6 +25,7 @@
     url: http://localhost:8765/langs-unmarked.html
     expect: { detected: [fr], html_lang: null, undeclared: [fr], declared_not_detected: [], agreement: [] }
 - description: fixture, too little text to detect a language
+  metadata: { noskill: skip } # depends on CLD3 skipping short blocks, a property of the skill's detector
   vars:
     url: http://localhost:8765/langs-short.html
     expect: { detected: [], html_lang: fr, declared_not_detected: [fr], undeclared: [], agreement: [] }

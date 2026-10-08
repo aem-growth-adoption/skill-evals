@@ -45,14 +45,24 @@ per cell): treat gaps of a few points as noise. Live sites drift, so rerun befor
 
 ## Without the skill
 
-Same cases and graders, same prompts, but Pi has no skill loaded and the workspace contains none; runs are checked for reads of skill files (none in the runs shown). Only a few models are run this way: it is a comparison, not a benchmark.
+Same cases and the same graders, but Pi has no skill loaded and the workspace contains none; runs are checked for reads of skill files. The prompt gets one addition: the output format (file names and fields, never how to produce them), because the graders read the skill's own formats. Cases that depend on a skill's own method are left out, and browser-probe is judged on "the recipe really loads the page" only. With-skill figures are restricted to the same cases. Only a few models are run this way: it is a comparison, not a benchmark.
 
 | Skill | Model | With skill | Without skill | Time with / without | Cost with / without |
 |---|---|---|---|---|---|
-| cdp-connect | haiku-5.5-low | ✓ 100% (18/18) | ✓ 94% (17/18) | 12 s / 13 s | $0.0010 / $0.0016 |
-| cdp-connect | sonnet-5.5-low | ✓ 100% (18/18) | ✓ 100% (18/18) | 11 s / 10 s | $0.019 / $0.017 |
-| page-prep | sonnet-5.5-low | ✓ 93% (25/27) | ✓ 100% (9/9) | 33 s / 15 s | $0.091 / $0.018 |
-| page-prep | haiku-5.5-low | ✓ 100% (9/9) | ✓ 100% (9/9) | 31 s / 28 s | $0.0072 / $0.0016 |
+| browser-probe | sonnet-5.5-low | ✓ 100% (12/12) | ✓ 100% (12/12) | 31 s / 24 s | $0.035 / $0.025 |
+| browser-probe | haiku-5.5-low | ✓ 100% (24/24) | ✗ 58% (7/12) | 28 s / 63 s | $0.0021 / $0.0032 |
+| cdp-connect | haiku-5.5-low | ✓ 100% (18/18) | ✗ 89% (16/18) | 12 s / 12 s | $0.0010 / $0.0013 |
+| cdp-connect | sonnet-5.5-low | ✓ 100% (18/18) | ✓ 94% (17/18) | 11 s / 10 s | $0.019 / $0.014 |
+| page-collect | sonnet-5.5-low | ✓ 100% (18/18) | ✓ 100% (18/18) | 11 s / 18 s | $0.023 / $0.039 |
+| page-collect | haiku-5.5-low | ✗ 78% (14/18) | ✓ 100% (18/18) | 13 s / 29 s | $0.0015 / $0.0047 |
+| page-langs | sonnet-5.5-low | ✓ 100% (18/18) | ✗ 83% (15/18) | 9 s / 10 s | $0.018 / $0.016 |
+| page-langs | haiku-5.5-low | ✓ 100% (18/18) | ✓ 100% (18/18) | 9 s / 13 s | $0.0013 / $0.0017 |
+| page-prep | sonnet-5.5-low | ✓ 93% (25/27) | ✓ 100% (9/9) | 33 s / 12 s | $0.091 / $0.013 |
+| page-prep | haiku-5.5-low | ✓ 100% (9/9) | ✓ 100% (9/9) | 31 s / 25 s | $0.0072 / $0.0017 |
+| page-reduce | sonnet-5.5-low | ✓ 100% (6/6) | ✗ 50% (3/6) | 28 s / 19 s | $0.077 / $0.045 |
+| page-reduce | haiku-5.5-low | ✓ 100% (6/6) | ✗ 83% (5/6) | 44 s / 29 s | $0.0073 / $0.0044 |
+| page-tree | haiku-5.5-low | ✓ 100% (9/9) | ✗ 44% (4/9) | 16 s / 38 s | $0.0017 / $0.0035 |
+| page-tree | sonnet-5.5-low | ✓ 100% (9/9) | ✗ 78% (7/9) | 13 s / 21 s | $0.027 / $0.037 |
 
 ## browser-probe
 

@@ -21,7 +21,8 @@ import {
  * skills (paths of skill folders; discovery is
  * otherwise disabled), tools (names), timeout_ms,
  * shell_env (variables exported before every shell command; `{run_id}` becomes a
- * unique id per call, reported as metadata.runId, e.g. to isolate PLAYWRIGHT_CLI_SESSION).
+ * unique id per call, reported as metadata.runId, e.g. to isolate PLAYWRIGHT_CLI_SESSION),
+ * shell_prelude (shell code run before every shell command, e.g. shell functions).
  * A session that exceeds timeout_ms is aborted and returned as a normal (failing)
  * result with metadata.timedOut; only provider/API failures surface as errors.
  * Reports `metadata.toolCalls` and `metadata.skillCalls` (a `read` of a
@@ -68,7 +69,7 @@ export default class PiProvider {
       modelRuntime,
       resourceLoader: loader,
       sessionManager: SessionManager.inMemory(cwd),
-      settingsManager: SettingsManager.inMemory(shellSettings(this.config.shell_env, runId)),
+      settingsManager: SettingsManager.inMemory(shellSettings(this.config.shell_env, this.config.shell_prelude, runId)),
       ...(tools && { tools }),
     });
 
@@ -133,9 +134,10 @@ function resultText(result) {
   return text.slice(0, 4000);
 }
 
-function shellSettings(shellEnv = {}, runId) {
+function shellSettings(shellEnv = {}, prelude = '', runId) {
   const exports = Object.entries(shellEnv).map(([k, v]) => `export ${k}=${JSON.stringify(String(v).replaceAll('{run_id}', runId))}`);
-  return exports.length ? { shellCommandPrefix: exports.join('; ') } : {};
+  const prefix = [...exports, prelude].filter(Boolean).join('\n');
+  return prefix ? { shellCommandPrefix: prefix } : {};
 }
 
 function modelByLabel(label) {

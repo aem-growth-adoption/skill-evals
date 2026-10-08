@@ -6,6 +6,7 @@
     url: http://localhost:8765/reduce.html
     task: Reduce the page below to a structural skeleton I can use as a blueprint for building blocks. Write the skeleton and the manifest to ./out/.
 - description: fixture, phase 1 only
+  metadata: { noskill: skip } # "phase 1" is the skill's own notion
   vars:
     check: reduce-phase1
     url: http://localhost:8765/reduce.html
