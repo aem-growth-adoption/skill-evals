@@ -14,7 +14,7 @@ if (!file || !skill || !ref) {
 const isScored = (c) => (c.assertion?.weight ?? 1) !== 0;
 const runs = JSON.parse(readFileSync(file, 'utf-8')).results.results.map((r) => ({
   model: r.provider.label,
-  site: r.testCase.vars.slug,
+  case: r.testCase.vars.slug ?? r.testCase.description,
   pass: r.success,
   latency_s: Math.round((r.latencyMs ?? 0) / 100) / 10,
   cost_usd: Math.round((r.response?.cost ?? 0) * 1e4) / 1e4,

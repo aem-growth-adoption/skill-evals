@@ -74,9 +74,10 @@ export default class PiProvider {
 
     const toolCalls = [];
     const skillNames = skillPaths.map((p) => basename(p));
+    const toolResults = [];
     session.subscribe((event) => {
-      if (event.type !== 'tool_execution_start') return;
-      toolCalls.push({ name: event.toolName, input: event.args });
+      if (event.type === 'tool_execution_start') toolCalls.push({ name: event.toolName, input: event.args });
+      if (event.type === 'tool_execution_end') toolResults.push({ name: event.toolName, text: resultText(event.result) });
     });
 
     const timedOut = Symbol('timeout');
@@ -101,6 +102,7 @@ export default class PiProvider {
           runId,
           timedOut: outcome === timedOut,
           toolCalls,
+          toolResults,
           skillCalls: skillCallsFrom(toolCalls, skillNames),
           loadedSkills: loader.getSkills().skills.map((s) => ({ name: s.name, filePath: s.filePath })),
         },
@@ -123,6 +125,12 @@ export default class PiProvider {
     cpSync(dir, copy, { recursive: true });
     return copy;
   }
+}
+
+/** Text of a tool result, capped so metadata stays small. */
+function resultText(result) {
+  const text = (result?.content ?? []).map((c) => c.text ?? '').join('\n') || JSON.stringify(result ?? '');
+  return text.slice(0, 4000);
 }
 
 function shellSettings(shellEnv = {}, runId) {

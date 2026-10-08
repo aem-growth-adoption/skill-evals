@@ -15,3 +15,103 @@ Floor: pass rate >= 90% within 120s. Refs: fix-web-skills-best-practices, fix-we
 | sonnet-5.5-low | 12 | 100% | 100% | 31 | 44 | 0 | 0.035 |
 
 **Lowest model meeting the floor: haiku-5.5-low**
+
+## cdp-connect
+
+Floor: pass rate >= 90% within 120s. Refs: fix-web-skills-best-practices.
+
+| Model | Runs | Pass | Within floor | Avg s | p95 s | Timeouts | $/run |
+|---|---|---|---|---|---|---|---|
+| gemma-4-26b-cf | 18 | 94% | 94% | 51 | 120 | 1 | 0.003 |
+| qwen3.8-27b-cf | 18 | 94% | 94% | 56 | 120 | 1 | 0.013 |
+| haiku-5.5-low | 18 | 100% | 100% | 12 | 30 | 0 | 0.001 |
+| gpt-6-sol-low | 18 | 94% | 94% | 16 | 120 | 1 | 0.014 |
+| sonnet-5.5-low | 18 | 100% | 100% | 11 | 20 | 0 | 0.019 |
+
+**Lowest model meeting the floor: gemma-4-26b-cf**
+
+## cdp-ext-pilot
+
+Floor: pass rate >= 90% within 150s. Refs: fix-web-skills-best-practices.
+
+| Model | Runs | Pass | Within floor | Avg s | p95 s | Timeouts | $/run |
+|---|---|---|---|---|---|---|---|
+| gemma-4-26b-cf | 9 | 100% | 100% | 57 | 84 | 0 | 0.005 |
+| qwen3.8-27b-cf | 9 | 89% | 89% | 98 | 150 | 1 | 0.021 |
+| haiku-5.5-low | 9 | 100% | 100% | 11 | 18 | 0 | 0.002 |
+| gpt-6-sol-low | 9 | 100% | 100% | 15 | 25 | 0 | 0.020 |
+| sonnet-5.5-low | 9 | 100% | 100% | 13 | 20 | 0 | 0.023 |
+
+**Lowest model meeting the floor: gemma-4-26b-cf**
+
+## page-collect
+
+Floor: pass rate >= 90% within 120s. Refs: fix-web-skills-best-practices.
+
+| Model | Runs | Pass | Within floor | Avg s | p95 s | Timeouts | $/run |
+|---|---|---|---|---|---|---|---|
+| gemma-4-26b-cf | 18 | 72% | 72% | 38 | 57 | 0 | 0.002 |
+| qwen3.8-27b-cf | 18 | 83% | 72% | 89 | 121 | 9 | 0.018 |
+| haiku-5.5-low | 18 | 78% | 78% | 13 | 24 | 0 | 0.002 |
+| gpt-6-sol-low | 18 | 100% | 100% | 13 | 18 | 0 | 0.020 |
+| sonnet-5.5-low | 18 | 100% | 100% | 11 | 18 | 0 | 0.023 |
+
+**Lowest model meeting the floor: gpt-6-sol-low**
+
+## page-langs
+
+Floor: pass rate >= 90% within 120s. Refs: fix-web-skills-best-practices.
+
+| Model | Runs | Pass | Within floor | Avg s | p95 s | Timeouts | $/run |
+|---|---|---|---|---|---|---|---|
+| gemma-4-26b-cf | 21 | 95% | 95% | 70 | 101 | 1 | 0.005 |
+| qwen3.8-27b-cf | 21 | 100% | 76% | 75 | 120 | 5 | 0.021 |
+| haiku-5.5-low | 21 | 100% | 100% | 9 | 13 | 0 | 0.001 |
+| gpt-6-sol-low | 21 | 100% | 100% | 14 | 19 | 0 | 0.020 |
+| sonnet-5.5-low | 21 | 100% | 100% | 9 | 12 | 0 | 0.018 |
+
+**Lowest model meeting the floor: gemma-4-26b-cf**
+
+## page-prep
+
+Floor: pass rate >= 90% within 120s. Refs: fix-web-skills-best-practices.
+
+| Model | Runs | Pass | Within floor | Avg s | p95 s | Timeouts | $/run |
+|---|---|---|---|---|---|---|---|
+| gemma-4-26b-cf | 9 | 33% | 22% | 93 | 123 | 3 | 0.012 |
+| qwen3.8-27b-cf | 9 | 56% | 33% | 116 | 123 | 7 | 0.055 |
+| haiku-5.5-low | 9 | 100% | 100% | 31 | 46 | 0 | 0.007 |
+| gpt-6-sol-low | 9 | 100% | 100% | 27 | 42 | 0 | 0.055 |
+| sonnet-5.5-low | 15 | 93% | 87% | 40 | 120 | 2 | 0.099 |
+
+> Baseline sonnet-5.5-low does not meet the floor: fix the skill or the eval before trusting the other rows.
+
+**Lowest model meeting the floor: haiku-5.5-low**
+
+## page-reduce
+
+Floor: pass rate >= 90% within 120s. Refs: fix-web-skills-best-practices.
+
+| Model | Runs | Pass | Within floor | Avg s | p95 s | Timeouts | $/run |
+|---|---|---|---|---|---|---|---|
+| gemma-4-26b-cf | 9 | 33% | 33% | 112 | 121 | 7 | 0.006 |
+| qwen3.8-27b-cf | 9 | 33% | 33% | 116 | 120 | 7 | 0.025 |
+| haiku-5.5-low | 9 | 100% | 100% | 35 | 78 | 0 | 0.005 |
+| gpt-6-sol-low | 9 | 100% | 100% | 35 | 45 | 0 | 0.050 |
+| sonnet-5.5-low | 9 | 100% | 100% | 23 | 36 | 0 | 0.061 |
+
+**Lowest model meeting the floor: haiku-5.5-low**
+
+## page-tree
+
+Floor: pass rate >= 90% within 120s. Refs: fix-web-skills-best-practices.
+
+| Model | Runs | Pass | Within floor | Avg s | p95 s | Timeouts | $/run |
+|---|---|---|---|---|---|---|---|
+| gemma-4-26b-cf | 9 | 67% | 56% | 108 | 120 | 4 | 0.008 |
+| qwen3.8-27b-cf | 9 | 67% | 56% | 101 | 121 | 5 | 0.026 |
+| haiku-5.5-low | 9 | 100% | 100% | 15 | 24 | 0 | 0.002 |
+| gpt-6-sol-low | 9 | 100% | 100% | 20 | 26 | 0 | 0.022 |
+| sonnet-5.5-low | 9 | 100% | 100% | 13 | 15 | 0 | 0.026 |
+
+**Lowest model meeting the floor: haiku-5.5-low**

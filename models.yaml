@@ -1,5 +1,6 @@
 # Model matrix. `rank` orders models from lowest to highest tier (assumption: edit freely);
 # the report picks the lowest-ranked model that meets a skill's floor.
+# The `baseline` model runs first; scripts/run.sh runs the others only if it meets the floor.
 - label: gemma-4-26b-cf
   rank: 1
   provider: cloudflare-workers-ai
@@ -22,6 +23,7 @@
   thinking: low
 - label: sonnet-5.5-low
   rank: 5
+  baseline: true # a suite must pass here before other models are run
   provider: azure-anthropic
   model: claude-sonnet-5-5
   thinking: low

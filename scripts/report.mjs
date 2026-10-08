@@ -40,13 +40,18 @@ function skillSection(skill) {
     '|---|---|---|---|---|---|---|---|',
   ];
   let lowest = null;
+  let baselineOk = null;
   for (const m of models) {
     const runs = rows.filter((r) => r.model === m.label);
     if (!runs.length) continue;
     const s = modelStats(runs, floor);
-    if (!lowest && s.good / s.n >= floor.min_pass_rate) lowest = m.label;
+    const meets = s.good / s.n >= floor.min_pass_rate;
+    if (!lowest && meets) lowest = m.label;
+    if (m.baseline) baselineOk = meets;
     lines.push(`| ${m.label} | ${s.n} | ${pct(s.pass, s.n)} | ${pct(s.good, s.n)} | ${s.avg.toFixed(0)} | ${s.p95.toFixed(0)} | ${s.timeouts} | ${s.cost.toFixed(3)} |`);
   }
+  const baseline = models.find((m) => m.baseline)?.label;
+  if (baselineOk === false) lines.push('', `> Baseline ${baseline} does not meet the floor: fix the skill or the eval before trusting the other rows.`);
   lines.push('', `**Lowest model meeting the floor: ${lowest ?? 'none of the tested models'}**`, '');
   return lines.join('\n');
 }
