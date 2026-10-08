@@ -1,5 +1,7 @@
 import { fail, graded, ok, readJson, readText } from '../../lib/outputs.mjs';
 
+// The node map may map IDs to {selector, ...} objects (the skill's format) or straight to selector strings.
+const selectorOf = (node) => (typeof node === 'string' ? node : node?.selector);
 const problems = (checks) => Object.entries(checks).filter(([, passed]) => !passed).map(([name]) => name);
 
 const CHECKS = {
@@ -9,18 +11,18 @@ const CHECKS = {
     'gradient background': /\[bg:gradient\]/.test(tree),
     'image background': /\[bg:image\]/.test(tree),
     'fixed banner promoted with dialog role': /\[dialog\]/.test(tree),
-    'banner selector in node map': Object.values(map).some((n) => n.selector === '#cookie-banner'),
-    'cards selector in node map': Object.values(map).some((n) => /section\.cards/.test(n.selector)),
+    'banner selector in node map': Object.values(map).some((n) => selectorOf(n) === '#cookie-banner'),
+    'cards selector in node map': Object.values(map).some((n) => /section\.cards/.test(selectorOf(n))),
   }),
   'layout-narrow': (tree, map) => ({
     'root line': /^r @0,0 \d+x\d+/m.test(tree),
-    'individual cards captured': /^\s+rc\d+c\d+ .*"?(First|Second|Third) card/m.test(tree) || Object.values(map).some((n) => /\.card/.test(n.selector)),
+    'individual cards captured': /^\s+rc\d+c\d+ .*"?(First|Second|Third) card/m.test(tree) || Object.values(map).some((n) => /\.card/.test(selectorOf(n))),
     'three-column grid': /\[3x1\]/.test(tree),
   }),
   'tree-valid': (tree, map) => ({
     'root line': /^r @0,0 \d+x\d+/m.test(tree),
     'several nodes': tree.split('\n').length >= 5,
-    'node map has body root': map.r?.selector === 'body',
+    'node map has body root': selectorOf(map.r) === 'body',
     'node map covers tree ids': Object.keys(map).length >= 3,
   }),
 };

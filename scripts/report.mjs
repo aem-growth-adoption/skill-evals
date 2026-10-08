@@ -6,7 +6,7 @@
 // scripts/promptfoo-report.mjs renders the same data as promptfoo HTML reports.
 import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { cell, isGood, loadSkills, models, pct, root, stats, table } from '../lib/results.mjs';
+import { cell, costComparison, isGood, loadSkills, models, money, pct, root, stats, table } from '../lib/results.mjs';
 
 /** Failure reasons with numbers and quoted values stripped, so similar failures group together. */
 const reasonKey = (r) => {
@@ -28,8 +28,8 @@ function skillSection(sk) {
   const lines = [`## ${skill}`, '', `Floor: ≥ ${floor.min_pass_rate * 100}% of runs pass within ${floor.max_latency_s} s. Skill ref: ${refs.join(', ')}.`, ''];
 
   const perModel = models.map((m) => [m, stats(rows.filter((r) => r.model === m.label), floor)]).filter(([, s]) => s.n);
-  lines.push(table(['Model', 'Runs', 'Passed', 'Within floor', 'Avg s', 'p95 s', 'Timeouts', '$/run'],
-    perModel.map(([m, s]) => [m.label + (m.baseline ? ' (baseline)' : ''), s.n, pct(rows.filter((r) => r.model === m.label && r.pass).length, s.n), cell(s), s.avg.toFixed(0), s.p95.toFixed(0), s.timeouts, s.cost.toFixed(3)])), '');
+  lines.push(table(['Model', 'Runs', 'Passed', 'Within floor', 'Flaky cases', 'Avg s', 'p95 s', 'Timeouts', '$/run'],
+    perModel.map(([m, s]) => [m.label + (m.baseline ? ' (baseline)' : ''), s.n, pct(rows.filter((r) => r.model === m.label && r.pass).length, s.n), cell(s), `${s.flaky} of ${s.cases}`, s.avg.toFixed(0), s.p95.toFixed(0), s.timeouts, s.cost.toFixed(3)])), '');
 
   const cases = [...new Set(rows.map((r) => r.case))];
   lines.push('**By case** (share of runs within the floor)', '');
@@ -58,18 +58,30 @@ const gist = skills
   .map((sk) => ({ skill: sk.skill, ...lowestFor(sk) }))
   .map(({ skill, lowest, baselineOk }) => `- **${skill}**: ${lowest}${baselineOk ? '' : ' (baseline below its floor, treat as provisional)'}`)
   .join('\n');
+const fmtFactor = (f) => (f >= 10 ? f.toFixed(0) : f.toFixed(1));
+const costTable = table(['Skill', 'Lowest sufficient model', '$/run', 'Highest model run', '$/run', 'Savings'],
+  skills.map((sk) => {
+    const c = costComparison(sk);
+    if (c.lowestCost === undefined) return [sk.skill, c.lowest ?? 'none', '-', c.top ?? '-', '-', '-'];
+    return [sk.skill, c.lowest, money(c.lowestCost), c.top + (c.topMeets ? '' : ' (misses floor)'), money(c.topCost), c.factor && c.lowest !== c.top ? `${fmtFactor(c.factor)}× cheaper` : 'same model'];
+  }));
 const summary = table(['Skill', ...models.map((m) => `${m.label}${m.baseline ? ' (baseline)' : ''}`), 'Lowest model meeting the floor'], skills.map(summaryRow));
 
 writeFileSync(join(root, 'REPORT.md'), `# Skill eval report
 
 ${skills.length} skills, ${models.length} models, ${totalRuns} runs. Models are ordered from lowest to highest tier.
 Each cell is the share of runs that passed within the skill's time budget; ✓ means it meets the skill's floor
-(see each section), ✗ that it does not, · that the model was not run. Numbers rest on small samples (9 to 27 runs
+(see each section), ✗ that it does not, · that the model was not run. Every case is run several times per
+model (usually 3) to measure stability: a case is flaky when its repeats disagree, which the per-skill tables count. Numbers rest on small samples (9 to 27 runs
 per cell): treat gaps of a few points as noise. Live sites drift, so rerun before relying on one result.
 
 ## The gist
 
 ${gist}
+
+## Cost of the model choice
+
+${costTable}
 
 ## Skill x model matrix
 
