@@ -27,6 +27,12 @@ npm run report                                      # results/ -> REPORT.html, R
   promptfoo itself. `lib/replay-provider.mjs` replays stored results, so no model is called.
 - `npx promptfoo view`: every raw run on this machine, with the agents' outputs and assertion reasons.
 
+## Publishing the report
+
+`.github/workflows/pages.yml` publishes `REPORT.html` as the site's index page whenever it changes on
+`main` (or on manual dispatch). It needs Pages enabled once by a repo admin: Settings > Pages >
+Source "GitHub Actions", visibility private (organization members only).
+
 ## How a run is graded
 
 - Every run gets its own copy of the workspace and its own `playwright-cli` session
